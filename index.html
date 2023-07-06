@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100 vh-100">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+  <meta name="generator" content="Hugo 0.84.0" />
+  <title>Caesar Cipher - CODEin.my.id</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/" />
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+    
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+  <!-- Custom styles for this template -->
+  <link href="cover.css" rel="stylesheet" />
+</head>
+<body class="d-flex h-100 text-center" style="background: #0A2647;">
+  <div class="cover-container d-flex w-80 h-100 p-3 mx-auto flex-column text-white">
+    <header class="mb-auto">
+      <div>
+        <h1 class="cover-heading">Caesar Cipher</h1>
+        <form>
+          <div class="form-group">
+            <label for="plaintext">Plaintext:</label><br />
+            <textarea id="plaintext" class="form-control" placeholder="Masukkan teks yang ingin di enkripsi" rows="4" cols="50" style="background-color: transparent; color: white;"></textarea>
+            <span class="small">*kunci antara 0-25 untuk mengkodekan pesan.</span><br />
+            <label for="key">Key:</label><br />
+            <input type="number" class="form-control" placeholder="Key berupa angka" id="key" style="background-color: transparent; color: white;"/><br /><br />
+            <div class="btn-group" role="group" aria-label="Encrypt and Decrypt buttons">
+              <button class="btn btn-secondary fw-bold text-white" type="button" onclick="encrypt()">Encrypt</button>
+              <button class="btn btn-danger fw-bold" type="button" onclick="clearText()">Clear</button>
+              <button class="btn btn-secondary fw-bold text-white" type="button" onclick="decrypt()">Decrypt</button>
+            </div>
+            <p class="small">*Bersihkan/reset form untuk melakukan Encrypt maupun Decrypt.</p>
+          </div>
+        </form>
+        <br />
+        <label for="ciphertext">Ciphertext:</label><br />
+        <textarea id="ciphertext" class="form-control" placeholder="Masukkan teks yang ingin di Dekripsi" rows="4" cols="50" style="background-color: transparent; color: white;"></textarea>
+      </div>
+    </header>
+  </div>
+  <script>
+    function encrypt() {
+      // Mengambil plaintext dan key dari form
+      var plaintext = document.getElementById("plaintext").value;
+      var key = parseInt(document.getElementById("key").value);
+
+      // Menyiapkan variabel untuk menampung ciphertext
+      var ciphertext = "";
+
+      // Melakukan enkripsi dengan Caesar Cipher
+      for (var i = 0; i < plaintext.length; i++) {
+        // Menggunakan Unicode untuk masing-masing karakter
+        var charCode = plaintext.charCodeAt(i);
+
+        // Jika karakter merupakan huruf kecil, enkripsi dengan Caesar Cipher
+        if (charCode >= 97 && charCode <= 122) {
+          ciphertext += String.fromCharCode(((charCode - 97 + key) % 26) + 97);
+        }
+        // Jika karakter merupakan huruf besar, enkripsi dengan Caesar Cipher
+        else if (charCode >= 65 && charCode <= 90) {
+          ciphertext += String.fromCharCode(((charCode - 65 + key) % 26) + 65);
+        }
+        // Jika karakter bukan huruf, abaikan saja
+        else {
+          ciphertext += plaintext[i];
+        }
+      }
+
+      // Menampilkan ciphertext di form
+      document.getElementById("ciphertext").value = ciphertext;
+    }
+
+    function decrypt() {
+      // Mengambil ciphertext dan key dari form
+      var ciphertext = document.getElementById("ciphertext").value;
+      var key = parseInt(document.getElementById("key").value);
+
+      // Menyiapkan variabel untuk menampung plaintext
+      var plaintext = "";
+
+      // Melakukan dekripsi dengan Caesar Cipher
+      for (var i = 0; i < ciphertext.length; i++) {
+        // Menggunakan Unicode untuk masing-masing karakter
+        var charCode = ciphertext.charCodeAt(i);
+
+        // Jika karakter merupakan huruf kecil, dekripsi dengan Caesar Cipher
+        if (charCode >= 97 && charCode <= 122) {
+          plaintext += String.fromCharCode(((charCode - 97 - key + 26) % 26) + 97);
+        }
+        // Jika karakter merupakan huruf besar, dekripsi dengan Caesar Cipher
+        else if (charCode >=65 && charCode <= 90) {
+          plaintext += String.fromCharCode(((charCode - 65 - key + 26) % 26) + 65);
+        }
+        // Jika karakter bukan huruf, abaikan saja
+        else {
+          plaintext += ciphertext[i];
+        }
+      }
+
+      // Menampilkan plaintext di form
+      document.getElementById("plaintext").value = plaintext;
+    }
+
+    function clearText() {
+      document.getElementById("plaintext").value = "";
+      document.getElementById("ciphertext").value = "";
+      document.getElementById("key").value = "";
+    }
+  </script>
+</body>
+</html>
